@@ -18,4 +18,7 @@ SOURCES = [
     ("docs/raw_movimientos_inventario.xlsx",      "MOVIMIENTOS",      "stg_movimientos_inventario"),
     ("docs/raw_feriados.xlsx",                    "FERIADOS",         "stg_feriados"),
     ("docs/LISTA_MARINO_MOTORS_Bs_USD_COP.xlsx",  "LISTA",            "stg_productos"),
+    ("docs/raw_proveedores.xlsx",                    "PROVEEDORES",         "stg_proveedores"),
+    ("docs/raw_tasas_cambio.xlsx",                    "TASAS",         "stg_tasas_cambio"),
+    ("docs/raw_tasas_cambio.xlsx",                    "FUENTES",         "stg_tasas_cambio_fuentes"),
 ]
