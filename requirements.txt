@@ -3,3 +3,5 @@ openpyxl
 sqlalchemy
 psycopg2-binary
 python-dotenv
+reportlab
+matplotlib

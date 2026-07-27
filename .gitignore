@@ -1,2 +1,7 @@
 .venv
 .env
+__pycache__/
+*.pyc
+
+# Figuras regeneradas por reports/generate_report.py en cada corrida.
+reports/figuras/
