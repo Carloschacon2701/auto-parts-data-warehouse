@@ -24,7 +24,7 @@ def run_sql_dir(engine: Engine, dir_path: str) -> None:
     for f in files:
         start = time.perf_counter()
         log.info("SQL  %s", f)
-        sql = f.read_text()
+        sql = f.read_text(encoding="utf-8")
         try:
             with engine.begin() as conn:
                 conn.execute(text(sql))

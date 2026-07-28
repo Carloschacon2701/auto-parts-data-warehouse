@@ -2,9 +2,10 @@
 import logging
 import time
 
+from sqlalchemy import text
 from sqlalchemy.engine import Engine
 
-from etl.config import LOG_LEVEL, SOURCES
+from etl.config import LOG_LEVEL, SOURCES, STG_SCHEMA
 from etl.db import get_db_engine
 from etl.extract import read_xlsx
 from etl.load import load_stg
@@ -15,6 +16,9 @@ log = logging.getLogger(__name__)
 
 def run_stg(engine: Engine) -> None:
     """Run STG for every entry in SOURCES; collect failures and re-raise at end."""
+    with engine.begin() as conn:
+        conn.execute(text(f"CREATE SCHEMA IF NOT EXISTS {STG_SCHEMA}"))
+
     failures: list[tuple[str, str, Exception]] = []
 
     for path, sheet, table in SOURCES:

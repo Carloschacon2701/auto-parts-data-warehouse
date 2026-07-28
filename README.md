@@ -45,3 +45,21 @@ This will:
 1. Load the raw Excel files under `docs/` into the `staging` schema (Python ETL).
 2. Execute every `*.sql` file in `sql/core/` in alphabetical order.
 3. Execute every `*.sql` file in `sql/marts/` in alphabetical order.
+
+The run is idempotent: `sql/core/01-schema.sql` drops and recreates the `core`
+schema, and every marts file drops its tables before rebuilding them.
+
+## Business-question report
+
+`sql/marts/` materializes one or more tables per business question — see
+[`sql/marts/README.md`](sql/marts/README.md) for the question-to-table mapping.
+
+To produce the PDF report that answers all of them from those tables:
+
+```bash
+python reports/generate_report.py
+```
+
+It queries the `marts` schema live and writes
+`reports/Informe_Preguntas_Negocio.pdf`, so the report always reflects the last
+pipeline run. Requires `reportlab` and `matplotlib` (see `requirements.txt`).
