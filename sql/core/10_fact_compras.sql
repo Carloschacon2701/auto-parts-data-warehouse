@@ -1,3 +1,9 @@
+-- Hecho de compras. Grano: una fila por línea de detalle de orden de compra.
+--
+-- El número de orden no se guarda en el hecho: es el identificador del documento
+-- de origen, no una medida ni una clave de dimensión. El contexto de la compra
+-- queda descrito por las tres dimensiones (fecha, producto y proveedor).
+
 DROP TABLE IF EXISTS core.fact_compras;
 
 CREATE TABLE core.fact_compras (
@@ -5,7 +11,6 @@ CREATE TABLE core.fact_compras (
     sk_fecha      BIGINT NOT NULL REFERENCES core.dim_tiempo(sk_fecha),
     sk_producto   BIGINT NOT NULL REFERENCES core.dim_producto(sk_producto),
     sk_proveedor  BIGINT NOT NULL REFERENCES core.dim_proveedor(sk_proveedor),
-    nro_orden     VARCHAR(50) NOT NULL,
     cantidad      INTEGER NOT NULL,
     cost_unt_usd  NUMERIC(14, 2) NOT NULL,
     subtotal_usd  NUMERIC(14, 2) NOT NULL
@@ -15,7 +20,6 @@ INSERT INTO core.fact_compras (
     sk_fecha,
     sk_producto,
     sk_proveedor,
-    nro_orden,
     cantidad,
     cost_unt_usd,
     subtotal_usd
@@ -24,7 +28,6 @@ SELECT
     dt.sk_fecha,
     dpp.sk_producto,
     dp.sk_proveedor,
-    scd.numero AS nro_orden,
     scd.cantidad,
     scd.costo_unitario_usd AS cost_unt_usd,
     scd.subtotal_usd

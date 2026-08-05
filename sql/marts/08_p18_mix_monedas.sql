@@ -5,7 +5,8 @@
 --   - por monto facturado (normalizado a USD)
 --   - por número de facturas
 --   - por unidades despachadas
--- `monto_en_moneda_original` queda como control: es la suma en la moneda de cobro.
+-- Todos los montos van en USD: `core.fact_ventas` ya no guarda el importe en la
+-- moneda de cobro, esa información la aporta la dimensión moneda.
 
 DROP TABLE IF EXISTS marts.p18_mix_monedas;
 
@@ -20,7 +21,6 @@ SELECT
     END                                          AS moneda_nombre,
     COUNT(DISTINCT fv.nro_factura)               AS nro_facturas,
     SUM(fv.cantidad)                             AS unidades_vendidas,
-    ROUND(SUM(fv.subtotal_mon), 2)               AS monto_en_moneda_original,
     ROUND(SUM(fv.subtotal_usd), 2)               AS ingreso_usd,
     ROUND(SUM(fv.subtotal_usd) / NULLIF(COUNT(DISTINCT fv.nro_factura), 0), 2) AS ticket_promedio_usd,
     ROUND(

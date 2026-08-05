@@ -693,7 +693,7 @@ def construir(d, est):
 
     S.append(Paragraph("Criterios de cálculo comunes", est["h2"]))
     criterios = pd.DataFrame([
-        ["Ingreso", "fact_ventas.subtotal_usd — importe normalizado a USD con la tasa vigente el día de la venta. El monto en la moneda de cobro se conserva en subtotal_mon."],
+        ["Ingreso", "fact_ventas.subtotal_usd — importe normalizado a USD con la tasa vigente el día de la venta. Todas las medidas del hecho van en USD; la moneda de cobro es la dimensión dim_moneda."],
         ["Margen bruto", "subtotal_usd − (cantidad × dim_producto.costo_usd). Es el margen de lo efectivamente vendido, no el teórico de la lista de precios."],
         ["Ticket", "Total de la factura completa (nro_factura), no de la línea. Las consultas consolidan a nivel de factura antes de promediar."],
         ["Fecha de corte", f"{p6k['fecha_corte']:%d/%m/%Y} — última fecha con ventas registradas. Se usa como \"hoy\" en la pregunta 6 para no depender de CURRENT_DATE."],
@@ -1140,14 +1140,15 @@ def construir(d, est):
     tb = pd.DataFrame({
         "Moneda": df["moneda_nombre"] + " (" + df["moneda"] + ")",
         "Facturas": df["nro_facturas"].apply(ent),
-        "Monto en moneda original": df["monto_en_moneda_original"].apply(lambda v: usd(v, 2)),
+        "Unidades": df["unidades_vendidas"].apply(ent),
         "Ingreso USD": df["ingreso_usd"].apply(lambda v: usd(v, 2)),
         "% monto": df["pct_por_monto"].apply(lambda v: pct(v, 2)),
         "% facturas": df["pct_por_nro_facturas"].apply(lambda v: pct(v, 2)),
         "% unidades": df["pct_por_unidades"].apply(lambda v: pct(v, 2)),
     })
     bloque(S, "Mix de monedas", tb, est,
-           [3.6 * cm, 1.8 * cm, 3.6 * cm, 2.6 * cm, 1.95 * cm, 1.95 * cm, 1.9 * cm], [1, 2, 3, 4, 5, 6])
+           [3.9 * cm, 2.0 * cm, 2.2 * cm, 2.9 * cm, 2.15 * cm, 2.15 * cm, 2.1 * cm],
+           [1, 2, 3, 4, 5, 6])
 
     bs = df[df["moneda"] == "BS"].iloc[0]
     us = df[df["moneda"] == "USD"].iloc[0]

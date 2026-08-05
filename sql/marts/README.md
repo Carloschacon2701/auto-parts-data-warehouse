@@ -22,8 +22,8 @@ pregunta en el índice del profesor.
 ## Criterios de cálculo comunes
 
 - **Ingreso**: `fact_ventas.subtotal_usd`, ya normalizado a USD en `core` con la tasa
-  del día de la venta (`dim_tiempo`). `subtotal_mon` conserva el monto en la moneda
-  de cobro y solo se usa como control en la pregunta 18.
+  del día de la venta (`dim_tiempo`). Todas las medidas del hecho van en USD; la
+  moneda en que se cobró es contexto y vive en `dim_moneda`.
 - **Margen realizado**: `subtotal_usd - (cantidad * dim_producto.costo_usd)`. Es el
   margen de lo efectivamente vendido, no el margen teórico de la lista de precios.
 - **Ticket**: total de la **factura** (`nro_factura`), no de la línea. Por eso las
