@@ -11,5 +11,13 @@ services:
     volumes:
       - autoParts:/var/lib/postgresql
 
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
 volumes:
   autoParts:
